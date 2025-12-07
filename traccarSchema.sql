@@ -586,15 +586,71 @@ CREATE TABLE `tc_user_order` (
   CONSTRAINT `fk_user_order_userid` FOREIGN KEY (`userid`) REFERENCES `tc_users` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-/*Table structure for table `tc_user_report` */
+CREATE TABLE `tc_users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `disablereports` bit(1) DEFAULT b'0',
+  `fixedemail` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`),
+  KEY `idx_users_email` (`email`),
+  KEY `idx_users_login` (`login`)
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
-CREATE TABLE `tc_user_report` (
-  `userid` int(11) NOT NULL,
-  `reportid` int(11) NOT NULL,
-  KEY `fk_user_report_userid` (`userid`),
-  KEY `fk_user_report_reportid` (`reportid`),
-  CONSTRAINT `fk_user_report_reportid` FOREIGN KEY (`reportid`) REFERENCES `tc_reports` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_user_report_userid` FOREIGN KEY (`userid`) REFERENCES `tc_users` (`id`) ON DELETE CASCADE
+/*Table structure for table `tc_savekid_health` */
+
+CREATE TABLE `tc_savekid_health` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `deviceid` int(11) NOT NULL,
+  `positionid` int(11) DEFAULT NULL,
+  `recordtime` timestamp NOT NULL,
+  `heartrate` int(11) DEFAULT NULL,
+  `bodytemperature` double DEFAULT NULL,
+  `steps` int(11) DEFAULT NULL,
+  `sleepminutes` int(11) DEFAULT NULL,
+  `sosactive` bit(1) DEFAULT NULL,
+  `sedentary` bit(1) DEFAULT NULL,
+  `batterylevel` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tc_savekid_health_deviceid_idx` (`deviceid`),
+  KEY `tc_savekid_health_positionid_idx` (`positionid`),
+  KEY `tc_savekid_health_recordtime_idx` (`recordtime`),
+  CONSTRAINT `fk_savekid_health_deviceid` FOREIGN KEY (`deviceid`) REFERENCES `tc_devices` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_savekid_health_positionid` FOREIGN KEY (`positionid`) REFERENCES `tc_positions` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+/*Table structure for table `tc_children` */
+
+CREATE TABLE `tc_children` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `lastname` varchar(128) NOT NULL,
+  `birthdate` timestamp NULL DEFAULT NULL,
+  `height` double DEFAULT NULL,
+  `weight` double DEFAULT NULL,
+  `conditions` varchar(2048) DEFAULT NULL,
+  `deviceid` int(11) DEFAULT NULL,
+  `createdat` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedat` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `tc_children_deviceid_idx` (`deviceid`),
+  CONSTRAINT `fk_children_deviceid` FOREIGN KEY (`deviceid`) REFERENCES `tc_devices` (`id`) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+
+/*Table structure for table `tc_children_health` */
+
+CREATE TABLE `tc_children_health` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `childid` int(11) NOT NULL,
+  `heartrate` int(11) DEFAULT NULL,
+  `temperature` double DEFAULT NULL,
+  `steps` int(11) DEFAULT NULL,
+  `sleep` int(11) DEFAULT NULL,
+  `timestamp` timestamp NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `tc_children_health_childid_idx` (`childid`),
+  KEY `tc_children_health_timestamp_idx` (`timestamp`),
+  CONSTRAINT `fk_children_health_childid` FOREIGN KEY (`childid`) REFERENCES `tc_children` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 /*Table structure for table `tc_user_user` */

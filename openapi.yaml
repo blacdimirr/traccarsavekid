@@ -69,6 +69,8 @@ tags:
     description: Calendar management
   - name: Statistics
     description: Retrieving server statistics
+  - name: SaveKID
+    description: SaveKID child profiles and health
 paths:
   /commands:
     get:
@@ -1782,8 +1784,186 @@ paths:
         '204':
           description: No Content
           content: {}
+  /savekid/children:
+    get:
+      summary: Fetch SaveKID children profiles
+      tags:
+        - SaveKID
+      parameters:
+        - name: all
+          in: query
+          description: Can only be used by admins or managers to fetch all entities
+          schema:
+            type: boolean
+        - name: userId
+          in: query
+          description: Standard users can use this only with their own userId
+          schema:
+            type: integer
+        - name: deviceId
+          in: query
+          description: Filter by associated device
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Child'
+    post:
+      summary: Create a SaveKID child profile
+      tags:
+        - SaveKID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Child'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+      x-codegen-request-body-name: body
+  /savekid/children/{id}:
+    get:
+      summary: Fetch a SaveKID child profile
+      tags:
+        - SaveKID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+    put:
+      summary: Update a SaveKID child profile
+      tags:
+        - SaveKID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Child'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+      x-codegen-request-body-name: body
+    delete:
+      summary: Delete a SaveKID child profile
+      tags:
+        - SaveKID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: No Content
+          content: {}
+  /savekid/children/by-device/{deviceId}:
+    get:
+      summary: Fetch a SaveKID child profile by device
+      tags:
+        - SaveKID
+      parameters:
+        - name: deviceId
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+        '404':
+          description: Not Found
+          content: {}
 components:
   schemas:
+    Child:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        lastName:
+          type: string
+        birthDate:
+          type: string
+          format: date-time
+        height:
+          type: number
+          format: double
+        weight:
+          type: number
+          format: double
+        conditions:
+          type: string
+        deviceId:
+          type: integer
+          format: int64
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        baseHealth:
+          $ref: '#/components/schemas/ChildHealth'
+    ChildHealth:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        childId:
+          type: integer
+          format: int64
+        heartRate:
+          type: integer
+        temperature:
+          type: number
+          format: double
+        steps:
+          type: integer
+        sleep:
+          type: integer
+        timestamp:
+          type: string
+          format: date-time
     Position:
       type: object
       properties:
