@@ -28,6 +28,8 @@ import CalendarsPage from './settings/CalendarsPage';
 import CalendarPage from './settings/CalendarPage';
 import ComputedAttributesPage from './settings/ComputedAttributesPage';
 import ComputedAttributePage from './settings/ComputedAttributePage';
+import ChildrenPage from './settings/ChildrenPage';
+import ChildPage from './settings/ChildPage';
 import MaintenancesPage from './settings/MaintenancesPage';
 import MaintenancePage from './settings/MaintenancePage';
 import CommandsPage from './settings/CommandsPage';
@@ -138,6 +140,9 @@ const Navigation = () => {
           <Route path="attributes" element={<ComputedAttributesPage />} />
           <Route path="attribute/:id" element={<ComputedAttributePage />} />
           <Route path="attribute" element={<ComputedAttributePage />} />
+          <Route path="children" element={<ChildrenPage />} />
+          <Route path="child/:id" element={<ChildPage />} />
+          <Route path="child" element={<ChildPage />} />
           <Route path="devices" element={<DevicesPage />} />
           <Route path="device/:id/connections" element={<DeviceConnectionsPage />} />
           <Route path="device/:id/command" element={<CommandDevicePage />} />

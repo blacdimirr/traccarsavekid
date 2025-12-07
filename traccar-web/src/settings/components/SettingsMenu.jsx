@@ -15,6 +15,7 @@ import SmartphoneIcon from '@mui/icons-material/Smartphone';
 import HelpIcon from '@mui/icons-material/Help';
 import PaymentIcon from '@mui/icons-material/Payment';
 import CampaignIcon from '@mui/icons-material/Campaign';
+import ChildCareIcon from '@mui/icons-material/ChildCare';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from '../../common/components/LocalizationProvider';
@@ -104,6 +105,12 @@ const SettingsMenu = () => {
                 selected={location.pathname.startsWith('/settings/attribute')}
               />
             )}
+            <MenuItem
+              title={t('savekidChildren')}
+              link="/settings/children"
+              icon={<ChildCareIcon />}
+              selected={location.pathname.startsWith('/settings/child')}
+            />
             {!features.disableMaintenance && (
               <MenuItem
                 title={t('sharedMaintenance')}

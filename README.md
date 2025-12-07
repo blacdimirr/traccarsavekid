@@ -27,7 +27,7 @@ Some of the available features include:
 
 ## Build
 
-Please read [build from source documentation](https://www.traccar.org/build/) on the official website.
+Please read [build from source documentation](https://www.traccar.org/build/) on the official website. For instructions specific to the SaveKID-enabled build (FA66S, salud y UI personalizada), consult [docs/savekid-build-guide.md](docs/savekid-build-guide.md).
 
 ## Team
 
