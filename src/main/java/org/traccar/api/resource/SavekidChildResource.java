@@ -17,6 +17,7 @@ package org.traccar.api.resource;
 
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -77,6 +78,7 @@ public class SavekidChildResource extends BaseObjectResource<SavekidChild> {
                 new Columns.All(), Condition.merge(conditions), new Order("name")));
     }
 
+    @POST
     @Override
     public Response add(SavekidChild entity) throws Exception {
         Date now = new Date();
