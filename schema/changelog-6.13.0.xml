@@ -71,10 +71,6 @@
       <column name="timestamp" />
     </createIndex>
 
-  </changeSet>
-
-  <changeSet author="savekid" id="changelog-6.13.0-user-child">
-
     <createTable tableName="tc_user_child">
       <column name="userid" type="INT">
         <constraints nullable="false" />
